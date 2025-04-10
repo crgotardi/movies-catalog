@@ -15,9 +15,14 @@
 }
 
 @layer base {
+  * {
+    @apply box-border;
+  }
+
   body {
     font-family: "DM Sans", serif;
     background: #030014;
+    
   }
 
   h1 {
@@ -37,13 +42,13 @@
   }
 
   header img {
-    @apply max-w-lg h-auto object-contain mx-auto my-5 drop-shadow-md;
+    @apply max-w-lg h-auto object-contain mx-auto my-5 mb-10 drop-shadow-md;
   }
 }
 
 @layer components {
   .pattern {
-    @apply bg-hero-pattern w-screen h-screen bg-center bg-cover absolute z-0;
+    @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
   }
 
   .wrapper {
@@ -72,17 +77,17 @@
 
   .search {
     @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
-
+ 
     & div {
       @apply relative flex items-center;
     }
 
     & img {
-      @apply absolute left-2 h-5 w-5;
+      @apply relative w-5 ml-2;
     }
 
     & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+      @apply w-full bg-transparent py-2 sm:pr-5 pl-5 text-base text-gray-200 placeholder-light-200 outline-hidden;
     }
   }
 
