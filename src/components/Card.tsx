@@ -16,7 +16,7 @@ interface GenericProps<T> {
 
 const CardContainer: React.FC<ChildrenProps> = ({ children }) => {
     return (
-        <div className="movie-card">
+        <div className="card">
             {children}
         </div>
     )

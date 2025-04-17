@@ -1,13 +1,15 @@
 type GridProps = {
     title: String,
     children: React.ReactNode,
-    className?: string;
+    className?: string,
+    isPending: boolean
 }
 
+const Grid = ({ title, children, isPending=false }: GridProps) => {
+    if (isPending) return (<p className="text-amber-50">Loading grid...</p>)
 
-const Grid = ({ title, children }: GridProps) => {
     return (
-        <div className="all-movies">
+        <div className="grid">
             <h2>{title}</h2>
             <ul>
                 {children}

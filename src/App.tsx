@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Logo from './components/Logo'
@@ -6,138 +6,25 @@ import Search from './components/Search'
 import TrendingList from './components/TrendingList.tsx'
 import Grid from './components/Grid.tsx'
 import Card from './components/Card.tsx'
+import useAnime from './hooks/useAnime.tsx'
 
 function App() {
+  const { trendingAnimes, getTrendingAnimes, topAnimes, getTopAnimes, isPending } = useAnime()
+
   const handleSearch = useCallback((query: string) => {
     console.log('searching...', query)
   }, [])
 
-  const trendingMovies = [
-    {
-      position: 1,
-      cover: '/d&d.png'
-    },
-    {
-      position: 2,
-      cover: '/d&d.png'
-    },
-    {
-      position: 3,
-      cover: '/d&d.png'
-    },
-    {
-      position: 4,
-      cover: '/d&d.png'
-    },
-    {
-      position: 5,
-      cover: '/d&d.png'
-    },
-  ]
-
-  const movies = [
-    {
-      id: 1,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 2,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 3,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 4,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 5,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 6,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 7,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 8,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 9,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 10,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 11,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    },
-    {
-      id: 12,
-      cover: '/the-witcher.png',
-      title: 'The Witcher Volume 2',
-      genre: 'Action',
-      rating: 4.8,
-      year: 2022
-    }
-  ]
+  useEffect(() => {
+    Promise.all([
+      getTrendingAnimes(),
+      getTopAnimes(),
+    ])
+  }, [])
 
   return (
     <main>
       <div className="pattern" />
-
       <div className="wrapper">
         <Header>
           <Header.Logo>
@@ -146,27 +33,24 @@ function App() {
               alt="logo"
             />
           </Header.Logo>
-          <Header.Cover>
-            <img src="/hero.png" alt="hero banner" />
-          </Header.Cover>
           <Header.Heading>
             <h1>
               Find 
-              <span className="text-gradient"> Movies </span>
+              <span className="text-gradient"> Animes </span>
               You’ll Love Without the Hassle
             </h1>
           </Header.Heading>
         </Header>
 
         <Search 
-          placeholder="Search through 300+ movies online"
+          placeholder="Search through 300+ animes online"
           handleSearch={handleSearch}
         />
 
-        <TrendingList list={trendingMovies} />
+        <TrendingList list={trendingAnimes} isPending={isPending} />
 
-        <Grid title="Popular">
-          {movies.map(movie => (
+        <Grid title="Popular" isPending={isPending}>
+          {topAnimes.map(movie => (
             <li key={movie.id}>
               <Card>
                 <Card.Cover src={movie.cover} alt={movie.title} />

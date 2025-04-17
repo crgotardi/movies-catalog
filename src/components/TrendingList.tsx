@@ -4,10 +4,13 @@ type TrendingItemProps = {
 }
 
 type TrendingListProps = {
-    list: TrendingItemProps[]
+    list: TrendingItemProps[],
+    isPending: boolean,
 }
 
-const TrendingList = ({ list }: TrendingListProps) => {
+const TrendingList = ({ list, isPending=false }: TrendingListProps) => {
+    if (isPending) return (<p className="text-amber-50">Loading trending...</p>)
+
     return (
         <div className="trending">
             <h2>Trending</h2>
