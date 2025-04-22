@@ -1,5 +1,5 @@
 import React from "react"
-import StarIcon from '../assets/star.svg'
+import StarIcon from '@assets/star.svg'
 
 type ChildrenProps = {
     children: React.ReactNode

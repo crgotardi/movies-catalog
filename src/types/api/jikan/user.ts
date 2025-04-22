@@ -1,4 +1,4 @@
-export type UserApi = {
+export type User = {
     url: string,
     username: string
 }

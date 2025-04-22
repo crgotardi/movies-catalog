@@ -1,7 +1,13 @@
-import { ImageApi } from "./image"
-import { UserApi } from "./user"
+import { Image } from "./image"
+import { Pagination } from "./pagination"
+import { User } from "./user"
 
-export type RecommendationAnimeApi = {
+export type RecommendationAnimes = {
+    data: RecommendationAnime[],
+    pagination: Pagination
+}
+
+export type RecommendationAnime = {
     mal_id: string,
     date: string,
     entry: {
@@ -9,10 +15,10 @@ export type RecommendationAnimeApi = {
         title: string,
         mal_id: number,
         images: {
-            jpg: ImageApi,
-            webp: ImageApi,
+            jpg: Image,
+            webp: Image,
         }
     }[],
     content: string,
-    user: UserApi,
+    user: User,
 }

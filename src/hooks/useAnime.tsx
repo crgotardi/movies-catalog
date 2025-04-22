@@ -1,22 +1,17 @@
-import jikanApi from '../api/jikan/index.ts'
-import { useState } from 'react'
-import { TrendingAnime, TopAnime } from '../types/anime'
-import { RecommendationAnimeApi } from '../types/api/jikan/recommendations.ts'
-import { TopAnimeApi } from '../types/api/jikan/top.ts'
+import { useState, useCallback } from 'react'
+import { getTop, getRecommendations } from '@/api/jikan/services'
+import { TrendingAnime, TopAnime } from '@/types/anime'
+import { Anime, RecommendationAnime } from '@/types/api/jikan'
 
 const useAnime = () => {
     const [trendingAnimes, setTrendingAnimes] = useState<TrendingAnime[]>([])
     const [topAnimes, setTopAnimes] = useState<TopAnime[]>([])
 
-    async function getTrendingAnimes() {
-        const res = await jikanApi.get('/recommendations/anime', {
-            params: {
-                page: 1
-            }
-        })
+    const getTrendingAnimes = useCallback(async () => {
+        const res = await getRecommendations()
     
         const data: TrendingAnime[] = res?.data?.data
-            ?.map((anime: RecommendationAnimeApi, index: number) => {
+            ?.map((anime: RecommendationAnime, index: number) => {
                 return {
                     position: index + 1,
                     cover: anime.entry[1].images.jpg.image_url
@@ -24,17 +19,12 @@ const useAnime = () => {
             })
         
         setTrendingAnimes(data)
-    }
+    }, [])
 
-    async function getTopAnimes() {
-        const res = await jikanApi.get('/top/anime', {
-            params: {
-                page: 1,
-                limit: 20,
-            }
-        })
+    const getTopAnimes = useCallback(async () => {
+        const res = await getTop()
     
-        const data: TopAnime[] = res?.data?.data?.map((anime: TopAnimeApi) => {
+        const data: TopAnime[] = res?.data?.data?.map((anime: Anime) => {
             return {
                 id: anime.mal_id,
                 title: anime.title,
@@ -46,12 +36,12 @@ const useAnime = () => {
         })
         
         setTopAnimes(data)
-    }
+    }, [])
 
     return {
         trendingAnimes,
-        getTrendingAnimes,
         topAnimes,
+        getTrendingAnimes,
         getTopAnimes
     }
 }

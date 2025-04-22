@@ -1,12 +1,12 @@
 import { useCallback, useEffect } from 'react'
 import './App.css'
-import Header from './components/Header'
-import Logo from './components/Logo'
-import Search from './components/Search'
-import TrendingList from './components/TrendingList.tsx'
-import Grid from './components/Grid.tsx'
-import Card from './components/Card.tsx'
-import useAnime from './hooks/useAnime.tsx'
+import Header from '@/components/Header.tsx'
+import Logo from '@/components/Logo.tsx'
+import Search from '@/components/Search.tsx'
+import TrendingList from '@/components/TrendingList.tsx'
+import Grid from '@/components/Grid.tsx'
+import Card from '@/components/Card.tsx'
+import useAnime from '@/hooks/useAnime.tsx'
 
 function App() {
   const { trendingAnimes, getTrendingAnimes, topAnimes, getTopAnimes } = useAnime()
@@ -50,14 +50,14 @@ function App() {
         <TrendingList list={trendingAnimes} />
 
         <Grid title="Popular">
-          {topAnimes.map(movie => (
-            <li key={movie.id}>
+          {topAnimes.map(anime => (
+            <li key={anime.id}>
               <Card>
-                <Card.Cover src={movie.cover} alt={movie.title} />
-                <Card.Title>{movie.title}</Card.Title>
+                <Card.Cover src={anime.cover} alt={anime.title} />
+                <Card.Title>{anime.title}</Card.Title>
                 <div className="content">
-                  <Card.Rating><p>{movie.rating}</p></Card.Rating>
-                  <Card.Content>{`${movie.genre} • ${movie.year}`}</Card.Content>
+                  <Card.Rating><p>{anime.rating}</p></Card.Rating>
+                  <Card.Content>{`${anime.genre} • ${anime.year}`}</Card.Content>
                 </div>
               </Card>
             </li>

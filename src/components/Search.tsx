@@ -1,5 +1,5 @@
 import { useState, memo } from "react"
-import searchIcon from '../assets/search.svg'
+import searchIcon from '@assets/search.svg'
 
 type searchProps = {
     placeholder: string,
