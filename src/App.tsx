@@ -9,7 +9,7 @@ import Card from './components/Card.tsx'
 import useAnime from './hooks/useAnime.tsx'
 
 function App() {
-  const { trendingAnimes, getTrendingAnimes, topAnimes, getTopAnimes, isPending } = useAnime()
+  const { trendingAnimes, getTrendingAnimes, topAnimes, getTopAnimes } = useAnime()
 
   const handleSearch = useCallback((query: string) => {
     console.log('searching...', query)
@@ -47,17 +47,17 @@ function App() {
           handleSearch={handleSearch}
         />
 
-        <TrendingList list={trendingAnimes} isPending={isPending} />
+        <TrendingList list={trendingAnimes} />
 
-        <Grid title="Popular" isPending={isPending}>
+        <Grid title="Popular">
           {topAnimes.map(movie => (
             <li key={movie.id}>
               <Card>
                 <Card.Cover src={movie.cover} alt={movie.title} />
-                <Card.Title title={movie.title} />
+                <Card.Title>{movie.title}</Card.Title>
                 <div className="content">
-                  <Card.Rating rating={movie.rating} />
-                  <Card.Content content={`${movie.genre} • ${movie.year}`} />
+                  <Card.Rating><p>{movie.rating}</p></Card.Rating>
+                  <Card.Content>{`${movie.genre} • ${movie.year}`}</Card.Content>
                 </div>
               </Card>
             </li>

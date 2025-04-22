@@ -1,5 +1,5 @@
 import jikanApi from '../api/jikan/index.ts'
-import { useState, useTransition, useCallback } from 'react'
+import { useState } from 'react'
 import { TrendingAnime, TopAnime } from '../types/anime'
 import { RecommendationAnimeApi } from '../types/api/jikan/recommendations.ts'
 import { TopAnimeApi } from '../types/api/jikan/top.ts'
@@ -7,7 +7,6 @@ import { TopAnimeApi } from '../types/api/jikan/top.ts'
 const useAnime = () => {
     const [trendingAnimes, setTrendingAnimes] = useState<TrendingAnime[]>([])
     const [topAnimes, setTopAnimes] = useState<TopAnime[]>([])
-    const [isPending, startTransition] = useTransition()
 
     async function getTrendingAnimes() {
         const res = await jikanApi.get('/recommendations/anime', {
@@ -28,31 +27,28 @@ const useAnime = () => {
     }
 
     async function getTopAnimes() {
-        startTransition(async () => {
-            const res = await jikanApi.get('/top/anime', {
-                params: {
-                    page: 1,
-                    limit: 20,
-                }
-            })
-        
-            const data: TopAnime[] = res?.data?.data?.map((anime: TopAnimeApi) => {
-                return {
-                    id: anime.mal_id,
-                    title: anime.title,
-                    cover: anime.images.jpg.image_url,
-                    rating: anime.score,
-                    genre: anime.genres[0].name,
-                    year: anime.year
-                }
-            })
-            
-            setTopAnimes(data)
+        const res = await jikanApi.get('/top/anime', {
+            params: {
+                page: 1,
+                limit: 20,
+            }
         })
+    
+        const data: TopAnime[] = res?.data?.data?.map((anime: TopAnimeApi) => {
+            return {
+                id: anime.mal_id,
+                title: anime.title,
+                cover: anime.images.jpg.image_url,
+                rating: anime.score,
+                genre: anime.genres[0].name,
+                year: anime.year
+            }
+        })
+        
+        setTopAnimes(data)
     }
 
     return {
-        isPending,
         trendingAnimes,
         getTrendingAnimes,
         topAnimes,
