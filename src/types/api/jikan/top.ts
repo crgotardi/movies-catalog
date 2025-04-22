@@ -1,7 +1,7 @@
-import { Anime } from "./anime";
+import { JikanAnime } from "./anime";
 import { Pagination } from "./pagination";
 
-export type TopAnimes = {
-    data: Anime[],
+export type TopAnimesApiResponse = {
+    data: JikanAnime[],
     pagination: Pagination
 }

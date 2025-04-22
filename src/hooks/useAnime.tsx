@@ -1,48 +1,62 @@
 import { useState, useCallback } from 'react'
-import { getTop, getRecommendations } from '@/api/jikan/services'
-import { TrendingAnime, TopAnime } from '@/types/anime'
-import { Anime, RecommendationAnime } from '@/types/api/jikan'
+import { 
+    getTopAnimes as getTop, 
+    getRecommendationAnimes as getRecommendations,
+    searchAnime as search 
+} from '@/api/jikan/services'
+import { TrendingAnime, Anime } from '@/types/anime'
+import { formatAnime, formatRecommendedAnime } from '@/helpers/formatFromJikanApi'
+import { TopAnimesApiResponse } from '@/types/api/jikan'
 
 const useAnime = () => {
     const [trendingAnimes, setTrendingAnimes] = useState<TrendingAnime[]>([])
-    const [topAnimes, setTopAnimes] = useState<TopAnime[]>([])
+    const [isTrendingAnimesLoading, setIsTrendingAnimesLoading] = useState(false)
+
+    const [animes, setAnimes] = useState<Anime[]>([])
+    const [isAnimesLoading, setIsAnimesLoading] = useState(false)
 
     const getTrendingAnimes = useCallback(async () => {
+        setIsTrendingAnimesLoading(true)
+
         const res = await getRecommendations()
-    
-        const data: TrendingAnime[] = res?.data?.data
-            ?.map((anime: RecommendationAnime, index: number) => {
-                return {
-                    position: index + 1,
-                    cover: anime.entry[1].images.jpg.image_url
-                }
-            })
-        
+        const data: TrendingAnime[] = formatRecommendedAnime(res?.data?.data)
         setTrendingAnimes(data)
+
+        setIsTrendingAnimesLoading(false)
     }, [])
 
-    const getTopAnimes = useCallback(async () => {
-        const res = await getTop()
-    
-        const data: TopAnime[] = res?.data?.data?.map((anime: Anime) => {
-            return {
-                id: anime.mal_id,
-                title: anime.title,
-                cover: anime.images.jpg.image_url,
-                rating: anime.score,
-                genre: anime.genres[0].name,
-                year: anime.year
-            }
+    const getTopAnimes = useCallback(async (page: number) => {
+        setIsAnimesLoading(true)
+        console.log('page', page)
+
+        const res = await getTop({ page, limit: 20 })
+        const data: Anime[] = formatAnime(res?.data?.data)
+        setAnimes(data)
+
+        setIsAnimesLoading(false)
+    }, [])
+
+    const searchAnime = useCallback(async (query: string, page: number) => {
+        setIsAnimesLoading(true)
+
+        const res = await search({ 
+            page,
+            q: query
         })
-        
-        setTopAnimes(data)
+        const data: Anime[] = formatAnime(res?.data?.data)
+        setAnimes(data)
+
+        setIsAnimesLoading(false)
     }, [])
 
     return {
+        animes,
         trendingAnimes,
-        topAnimes,
+        isAnimesLoading,
+        isTrendingAnimesLoading,
+        getTopAnimes,
         getTrendingAnimes,
-        getTopAnimes
+        searchAnime,
     }
 }
 

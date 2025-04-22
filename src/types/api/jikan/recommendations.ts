@@ -2,12 +2,12 @@ import { Image } from "./image"
 import { Pagination } from "./pagination"
 import { User } from "./user"
 
-export type RecommendationAnimes = {
-    data: RecommendationAnime[],
+export type RecommendationAnimesApiResponse = {
+    data: JikanRecommendationAnime[],
     pagination: Pagination
 }
 
-export type RecommendationAnime = {
+export type JikanRecommendationAnime = {
     mal_id: string,
     date: string,
     entry: {

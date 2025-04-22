@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 type TrendingItemProps = {
     position: number,
     cover: string
@@ -7,13 +5,15 @@ type TrendingItemProps = {
 
 type TrendingListProps = {
     list: TrendingItemProps[],
+    isLoading?: boolean
 }
 
-const TrendingList = ({ list }: TrendingListProps) => {
+const TrendingList = ({ list, isLoading=false }: TrendingListProps) => {
     return (
         <div className="trending">
             <h2>Trending</h2>
-            <Suspense fallback={<TrendingSkeleton />}>
+            { isLoading ? 
+                <TrendingSkeleton /> : 
                 <ul>
                     {list.map((item) => (
                         <li key={item.position}>
@@ -22,7 +22,7 @@ const TrendingList = ({ list }: TrendingListProps) => {
                         </li>
                     ))}
                 </ul>
-            </Suspense>
+            }
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import Header from '@/components/Header.tsx'
 import Logo from '@/components/Logo.tsx'
@@ -7,20 +7,43 @@ import TrendingList from '@/components/TrendingList.tsx'
 import Grid from '@/components/Grid.tsx'
 import Card from '@/components/Card.tsx'
 import useAnime from '@/hooks/useAnime.tsx'
+import usePagination from './hooks/usePagination'
 
 function App() {
-  const { trendingAnimes, getTrendingAnimes, topAnimes, getTopAnimes } = useAnime()
+  const {
+    animes,
+    trendingAnimes,
+    isAnimesLoading,
+    isTrendingAnimesLoading,
+    getTopAnimes,
+    getTrendingAnimes, 
+    searchAnime,
+  } = useAnime()
 
-  const handleSearch = useCallback((query: string) => {
-    console.log('searching...', query)
-  }, [])
+  const { currentPage, onNavigateNext, onNavigatePrevious, resetPagination } = usePagination()
+
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
-    Promise.all([
-      getTrendingAnimes(),
-      getTopAnimes(),
-    ])
+    getTrendingAnimes()
   }, [])
+
+  const fetchGridData = useCallback(() => {
+    if (query) {
+      searchAnime(query, currentPage)
+      return
+    }
+    
+    getTopAnimes(currentPage)
+  }, [query, currentPage])
+
+  useEffect(() => {
+    resetPagination()
+  }, [query])
+
+  useEffect(() => {
+    fetchGridData()
+  }, [currentPage, query])
 
   return (
     <main>
@@ -28,10 +51,7 @@ function App() {
       <div className="wrapper">
         <Header>
           <Header.Logo>
-            <Logo 
-              src="/logo.png" 
-              alt="logo"
-            />
+            <Logo src="/logo.png" alt="logo" />
           </Header.Logo>
           <Header.Heading>
             <h1>
@@ -42,15 +62,19 @@ function App() {
           </Header.Heading>
         </Header>
 
+        <TrendingList list={trendingAnimes} isLoading={isTrendingAnimesLoading} />
+
         <Search 
           placeholder="Search through 300+ animes online"
-          handleSearch={handleSearch}
+          handleSearch={(query) => setQuery(query?.trim())}
         />
 
-        <TrendingList list={trendingAnimes} />
-
-        <Grid title="Popular">
-          {topAnimes.map(anime => (
+        <Grid 
+          title="Popular" 
+          isLoading={isAnimesLoading}
+          paginationProps={{ currentPage, onNavigateNext, onNavigatePrevious }}
+        >
+          {animes.map(anime => (
             <li key={anime.id}>
               <Card>
                 <Card.Cover src={anime.cover} alt={anime.title} />

@@ -1,10 +1,10 @@
-export type TopAnime = {
+export type Anime = {
     id: string,
     title: string,
     cover: string
     rating: number,
     genre: string,
-    year: string
+    year: number
 }
 
 export type TrendingAnime = {

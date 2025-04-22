@@ -1,6 +1,6 @@
 export type PaginationRequest = {
     page: number,
-    limit: number,
+    limit?: number,
 }
 
 export type Pagination = {

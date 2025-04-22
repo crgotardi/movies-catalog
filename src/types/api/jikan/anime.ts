@@ -1,7 +1,7 @@
 import { Entity } from "./entity"
 import { Image } from "./image"
 
-export type Anime = {
+export type JikanAnime = {
     mal_id: string,
     url: string,
     images: {

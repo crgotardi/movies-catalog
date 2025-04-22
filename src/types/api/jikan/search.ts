@@ -1,11 +1,11 @@
-import { Anime } from "./anime"
+import { JikanAnime } from "./anime"
 import { Pagination, PaginationRequest } from "./pagination"
 
 export type SearchAnimeRequest = PaginationRequest & {
     q: string,
 }
 
-export type SearchAnime = {
-    data: Anime[],
+export type SearchAnimeApiResponse = {
+    data: JikanAnime[],
     pagination: Pagination
 }

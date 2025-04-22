@@ -76,7 +76,7 @@
   }
 
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg max-w-3xl mx-auto;
  
     & div {
       @apply relative flex items-center;
@@ -136,6 +136,22 @@
 
     & .content .year {
       @apply text-gray-100 font-medium text-base;
+    }
+  }
+
+  .button {
+    @apply rounded-full p-4 outline-0 shadow-none w-fit min-w-[56px] cursor-pointer duration-200 ease-in-out;
+
+    &.sm {
+      @apply p-2 min-w-[40px];
+    }
+
+    &.primary {
+      @apply bg-gradient-to-r from-[#D6C7FF] to-[#AB8BFF] text-white;
+
+      &:hover {
+        @apply brightness-110;
+      }
     }
   }
 }

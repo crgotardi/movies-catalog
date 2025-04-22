@@ -1,5 +1,5 @@
 import { useState, memo } from "react"
-import searchIcon from '@assets/search.svg'
+import searchIcon from '@/assets/search.svg'
 
 type searchProps = {
     placeholder: string,
@@ -16,7 +16,7 @@ const Search = ({ placeholder="Search", handleSearch }: searchProps) => {
     }
     
     return (
-        <div className="search flex">
+        <div className="search flex my-5">
             <img src={searchIcon} alt="search" />
             <input
                 type="search" 

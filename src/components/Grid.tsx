@@ -1,18 +1,22 @@
-import { Suspense } from 'react'
+import Pagination, { PaginationProps } from "./Pagination"
 
 type GridProps = {
     title: String,
     children: React.ReactNode,
     className?: string,
+    isLoading?: boolean
+    paginationProps: PaginationProps
 }
 
-const Grid = ({ title, children}: GridProps) => {
+const Grid = ({ title, children, isLoading=false, paginationProps }: GridProps) => {
     return (
         <div className="grid">
             <h2>{title}</h2>
-            <Suspense fallback={<GridSkeleton/>}>
-                <ul>{children}</ul>
-            </Suspense>
+            { isLoading ? 
+                <GridSkeleton /> : 
+                <ul>{children}</ul> 
+            }
+            <Pagination {...paginationProps} />
         </div>
     )
 }

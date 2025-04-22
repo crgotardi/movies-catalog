@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast';
-import { AxiosRequestConfig } from 'axios'
 import jikanApi from './index'
+import { PaginationRequest, SearchAnimeRequest } from '@/types/api/jikan';
 
-export async function getTop(params: AxiosRequestConfig<{}>) {
+export async function getTopAnimes(params: PaginationRequest | undefined) {
     try {
         const res = await jikanApi.get('/top/anime', {
             params: params
@@ -11,10 +11,11 @@ export async function getTop(params: AxiosRequestConfig<{}>) {
         return res
     } catch(error) {
         toast.error(`error getting top animes: ${error}`)
+        return []
     }
 }
 
-export async function getRecommendations(params?: AxiosRequestConfig<any> | undefined) {
+export async function getRecommendationAnimes(params?: PaginationRequest | undefined) {
     try {
         const res = await jikanApi.get('/recommendations/anime', {
             params: params
@@ -22,11 +23,12 @@ export async function getRecommendations(params?: AxiosRequestConfig<any> | unde
 
         return res
     } catch(error) {
-        toast.error(`error getting trending animes: ${error}`)
+        toast.error(`error getting anime recommendations: ${error}`)
+        return []
     }
 }
 
-export async function search(params?: AxiosRequestConfig<any> | undefined) {
+export async function searchAnime(params?: SearchAnimeRequest | undefined) {
     try {
         const res = await jikanApi.get('/anime', {
             params: params
@@ -34,6 +36,7 @@ export async function search(params?: AxiosRequestConfig<any> | undefined) {
 
         return res
     } catch(error) {
-        toast.error(`error getting trending animes: ${error}`)
+        toast.error(`error searching animes: ${error}`)
+        return []
     }
 }

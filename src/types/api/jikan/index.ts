@@ -1,16 +1,16 @@
-import { Anime } from "./anime";
-import { RecommendationAnimes, RecommendationAnime } from "./recommendations";
-import { TopAnimes } from "./top";
-import { SearchAnime, SearchAnimeRequest } from "./search";
+import { JikanAnime } from "./anime";
+import { RecommendationAnimesApiResponse, JikanRecommendationAnime } from "./recommendations";
+import { TopAnimesApiResponse } from "./top";
+import { SearchAnimeApiResponse, SearchAnimeRequest } from "./search";
 import { Pagination, PaginationRequest } from "./pagination";
 
 export {
-    Anime,
+    JikanAnime,
+    JikanRecommendationAnime,
     Pagination,
     PaginationRequest,
-    RecommendationAnimes,
-    RecommendationAnime,
-    SearchAnime,
     SearchAnimeRequest,
-    TopAnimes
+    RecommendationAnimesApiResponse,
+    SearchAnimeApiResponse,
+    TopAnimesApiResponse
 }
