@@ -59,7 +59,7 @@
     @apply mt-20;
 
     & ul {
-      @apply flex flex-row overflow-y-auto gap-5 -mt-10 w-full hide-scrollbar;
+      @apply flex flex-row overflow-y-auto overflow-x-auto gap-5 -mt-10 w-full hide-scrollbar;
     }
 
     & ul li {
@@ -140,10 +140,10 @@
   }
 
   .button {
-    @apply rounded-full p-4 outline-0 shadow-none w-fit min-w-[56px] cursor-pointer duration-200 ease-in-out;
+    @apply rounded-full flex items-center p-3 outline-0 shadow-none w-fit min-w-[24px] cursor-pointer duration-200 ease-in-out;
 
     &.sm {
-      @apply p-2 min-w-[40px];
+      @apply p-2 min-w-[24px];
     }
 
     &.primary {

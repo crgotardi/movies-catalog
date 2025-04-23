@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import React from "react"
 import Button from "./Button"
 
@@ -12,9 +13,13 @@ export type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({ hasPrevious, hasNext, currentPage, onNavigateNext, onNavigatePrevious }) => {
     return (
         <div className="flex gap-4 justify-center items-center">
-            <Button disabled={!hasPrevious} onClick={onNavigatePrevious}>Prev</Button>
+            <Button size="sm" disabled={!hasPrevious} onClick={onNavigatePrevious}>
+                <ArrowLeftIcon />
+            </Button>
             <span className="text-white">{currentPage}</span>
-            <Button disabled={!hasNext} onClick={onNavigateNext}>Next</Button>
+            <Button size="sm" disabled={!hasNext} onClick={onNavigateNext}>
+                <ArrowRightIcon />
+            </Button>
         </div>
     )
 }

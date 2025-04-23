@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import LoadingSpinner from "./LoadingSpinner"
 
 type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
     children: ReactNode | string,
@@ -18,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({ children, variant='primary', size='md',
             onClick={onClick} 
             disabled={isDisabled}
         >
-            {isLoading && <p>Loading dasdasd</p>}
+            {isLoading && <LoadingSpinner />}
             {children}
         </button>
     )

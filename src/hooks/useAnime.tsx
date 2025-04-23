@@ -18,8 +18,10 @@ const useAnime = () => {
     const getTrendingAnimes = useCallback(async () => {
         setIsTrendingAnimesLoading(true)
 
-        const res = await getRecommendations()
-        const data: TrendingAnime[] = formatRecommendedAnime(res?.data?.data)
+        const res = await getRecommendations({ page: 1 })
+        const topFiveTrendingAnimes = res?.data?.data?.slice(0, 5) || []
+
+        const data: TrendingAnime[] = formatRecommendedAnime(topFiveTrendingAnimes)
         setTrendingAnimes(data)
 
         setIsTrendingAnimesLoading(false)
@@ -27,7 +29,6 @@ const useAnime = () => {
 
     const getTopAnimes = useCallback(async (page: number) => {
         setIsAnimesLoading(true)
-        console.log('page', page)
 
         const res = await getTop({ page, limit: 20 })
         const data: Anime[] = formatAnime(res?.data?.data)
